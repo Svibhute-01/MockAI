@@ -14,12 +14,11 @@ export const googleAuth = async (req, res) => {
     const token = await generateJWTtoken(user._id);
 
     res.cookie("token", token, {
-      httpOnly: true, // ✅ fixed
-      secure: false,  // true in production (HTTPS)
-      sameSite: "strict",
-      maxAge: 7 * 24 * 3600 * 1000
-    });
-
+  httpOnly: true,
+  secure: false, // true in production
+  sameSite: "lax", // ✅ IMPORTANT FIX
+  maxAge: 7 * 24 * 3600 * 1000
+});
     return res.status(200).json({
       message: "User authenticated",
       user
@@ -28,6 +27,21 @@ export const googleAuth = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: `Google auth error: ${error.message}`
+    });
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    res.clearCookie("token");
+
+    return res.status(200).json({
+      message: "Logout successfully",
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message
     });
   }
 };
