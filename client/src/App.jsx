@@ -1,15 +1,34 @@
-import React from "react";
-import {Route,Routes} from "react-router-dom"
+import React, { useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 
-export const serverUrl=" http://localhost:3001"
+import API from "./api/api";
+
+export const serverUrl = "http://localhost:3001";
 
 function App() {
+  
+  useEffect(() => {
+  const getUser = async () => {
+    try {
+      console.log("BASE URL:", API.defaults.baseURL);
+
+      const result = await API.get("/api/user/current-user");
+
+      console.log("USER:", result.data);
+    } catch (error) {
+      console.error("FETCH USER ERROR:", error);
+      console.log("ACTUAL URL:", error?.request?.responseURL);
+    }
+  };
+
+  getUser();
+}, []);
   return (
     <Routes>
-      <Route  path="/" element={<Home/>}/>
-      <Route path="/auth" element={<Auth/>}/>
+      <Route path="/" element={<Home />} />
+      <Route path="/auth" element={<Auth />} />
     </Routes>
   );
 }

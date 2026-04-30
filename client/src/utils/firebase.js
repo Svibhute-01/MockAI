@@ -1,16 +1,22 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
-  authDomain: "interviewiqai-d2903.firebaseapp.com",
-  projectId: "interviewiqai-d2903",
-  storageBucket: "interviewiqai-d2903.firebasestorage.app",
-  messagingSenderId: "977917881822",
-  appId: "1:977917881822:web:e58eb37128af0e63ef814f"
+  authDomain: "mockai-bc070.firebaseapp.com",
+  projectId: "mockai-bc070",
+  storageBucket: "mockai-bc070.firebasestorage.app",
+  messagingSenderId: "232893860599",
+  appId: "1:232893860599:web:c34bf74fe9c6336cd061f2"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
-export const provider = new GoogleAuthProvider();
+const auth=getAuth(app);
+const provider=new GoogleAuthProvider();
+export {auth,provider};

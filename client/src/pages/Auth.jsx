@@ -5,30 +5,46 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../utils/firebase.js";
 import axios from "axios";
 import { serverUrl } from "../App.jsx";
+import API from "../api/api.js";
 
 export default function Auth() {
-  const handleGoogleAuth = async () => {
-  try {
-    console.log("Step 1: Button clicked");
+const handleGoogleAuth = async () => {
+  console.log("🔥 START");
 
+  try {
     const response = await signInWithPopup(auth, provider);
-    console.log("Step 2: Firebase success");
+    console.log("✅ Firebase DONE");
+
+    if (!response || !response.user) {
+      console.log("❌ No user returned");
+      return;
+    }
 
     const user = response.user;
+    console.log("👤 USER:", user);
 
-    const result = await axios.post(
-      serverUrl + "/api/auth/google",
+    const token = await user.getIdToken(); // 🔥 important
+
+    console.log("👉 CALLING BACKEND");
+
+    const result = await API.post(
+      "/api/auth/google",
       {
         name: user.displayName || "User",
         email: user.email,
+        token: token,
       },
       { withCredentials: true }
     );
 
-    console.log("Step 3: Backend success", result.data);
+    console.log("🚀 BACKEND SUCCESS", result.data);
 
   } catch (error) {
-    console.log("ERROR:", error);
+    if (error.response) {
+      console.log("❌ Backend Error:", error.response.data);
+    } else {
+      console.log("❌ Auth Error:", error.message);
+    }
   }
 };
 
