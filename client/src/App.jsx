@@ -4,11 +4,13 @@ import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 
 import API from "./api/api";
+import { useDispatch } from "react-redux";
+import { setUserData } from "./redux/userSlice";
 
 export const serverUrl = "http://localhost:3001";
 
 function App() {
-  
+  const dispatch=useDispatch()
   useEffect(() => {
   const getUser = async () => {
     try {
@@ -17,8 +19,11 @@ function App() {
       const result = await API.get("/api/user/current-user");
 
       console.log("USER:", result.data);
+
+      dispatch(setUserData(result.data));
     } catch (error) {
       console.error("FETCH USER ERROR:", error);
+      dispatch(setUserData(null))
       console.log("ACTUAL URL:", error?.request?.responseURL);
     }
   };
