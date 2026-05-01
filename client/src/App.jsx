@@ -20,7 +20,7 @@ function App() {
 
       console.log("USER:", result.data);
 
-      dispatch(setUserData(result.data));
+      dispatch(setUserData(result.data.user));
     } catch (error) {
       console.error("FETCH USER ERROR:", error);
       dispatch(setUserData(null))
@@ -29,7 +29,7 @@ function App() {
   };
 
   getUser();
-}, []);
+}, [dispatch]);
   return (
     <Routes>
       <Route path="/" element={<Home />} />

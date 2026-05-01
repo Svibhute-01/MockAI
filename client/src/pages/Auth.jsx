@@ -6,8 +6,12 @@ import { auth, provider } from "../utils/firebase.js";
 import axios from "axios";
 import { serverUrl } from "../App.jsx";
 import API from "../api/api.js";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/userSlice.js";
 
 export default function Auth() {
+
+  const dispatch=useDispatch();
 const handleGoogleAuth = async () => {
   console.log("🔥 START");
 
@@ -37,13 +41,17 @@ const handleGoogleAuth = async () => {
       { withCredentials: true }
     );
 
-    console.log("🚀 BACKEND SUCCESS", result.data);
+    console.log("🚀 BACKEND SUCCESS");
+    dispatch(setUserData(result.data.user));
+
 
   } catch (error) {
     if (error.response) {
       console.log("❌ Backend Error:", error.response.data);
+      dispatch(setUserData(null));
     } else {
       console.log("❌ Auth Error:", error.message);
+      dispatch(setUserData(null));
     }
   }
 };
