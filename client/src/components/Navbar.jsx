@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import API from "../api/api";
 import { setUserData } from "../redux/userSlice";
+import AuthModel from "./AuthModel";
 
 function Navbar() {
   const { userData } = useSelector((state) => state.user);
@@ -15,6 +16,7 @@ function Navbar() {
 
   const [showCreditPopup, setShowCreditPopup] = useState(false);
   const [showUserPopup, setShowUserPopup] = useState(false);
+  const [showAuth,setShowAuth]=useState(false);
 
   const creditRef = useRef();
   const userRef = useRef();
@@ -76,6 +78,10 @@ function Navbar() {
           <div className="relative" ref={creditRef}>
             <button
               onClick={() => {
+                if(!userData){
+                  setShowAuth(true)
+                  return
+                }
                 setShowCreditPopup(!showCreditPopup);
                 setShowUserPopup(false);
               }}
@@ -132,6 +138,10 @@ function Navbar() {
           <div className="relative" ref={userRef}>
   <button
     onClick={() => {
+      if(!userData){
+                  setShowAuth(true)
+                  return;
+                }
       setShowUserPopup(!showUserPopup);
       setShowCreditPopup(false);
     }}
@@ -233,6 +243,8 @@ function Navbar() {
 
         </div>
       </motion.div>
+
+      {showAuth && <AuthModel onClose={()=>setShowAuth(false)}/>}
     </div>
   );
 }

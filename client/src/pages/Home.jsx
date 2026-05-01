@@ -8,9 +8,12 @@ function Home() {
 
   return (
    <div>
-    <Navbar>
+    <Navbar></Navbar>
+    <div>
+      
+    </div>
 
-    </Navbar>
+    
    </div>
   )
 }

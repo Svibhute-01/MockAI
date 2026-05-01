@@ -9,10 +9,10 @@ import API from "../api/api.js";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../redux/userSlice.js";
 
-export default function Auth() {
+export default function Auth({isModel=false}) {
 
   const dispatch=useDispatch();
-const handleGoogleAuth = async () => {
+  const handleGoogleAuth = async () => {
   console.log("🔥 START");
 
   try {
@@ -57,13 +57,24 @@ const handleGoogleAuth = async () => {
 };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f3f4f6]">
+   <div
+  className={`w-full ${
+    isModel
+      ? "py-4"
+      : "min-h-screen flex items-center justify-center bg-[#f3f4f6]"
+  }`}
+>
       
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white w-[380px] rounded-2xl shadow-lg p-8 text-center"
-      >
+        className={
+          `w-full
+          ${isModel? "max-w-md p-8 rounded-2xl":"max-w-lg p-12 rounded-[32px]" }
+          bg-white shadow-2xl border-gray-200
+          `
+        }>
+        
         {/* Logo */}
         <div className="flex items-center justify-center gap-2 mb-6">
           <div className="w-8 h-8 bg-black rounded-md flex items-center justify-center">
