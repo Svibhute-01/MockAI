@@ -10,6 +10,7 @@ import {
   BsArrowRight,
 } from 'react-icons/bs'
 import { HiSparkles } from 'react-icons/hi'
+import Footer from '../components/Footer'
 
 const features = [
   {
@@ -166,6 +167,8 @@ function Home() {
           ))}
         </div>
       </section>
+
+      <Footer/>
     </div>
   )
 }
