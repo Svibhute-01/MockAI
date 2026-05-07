@@ -34,14 +34,21 @@ export const analyzeResume = async (req, res) => {
     const message = [
       {
         role: "system",
-        content: `Extract structured data from resume.
-Return strictly valid JSON:
+content: `
+Extract structured data from resume.
+
+Return ONLY valid JSON.
+
 {
   "role":"string",
   "experience":"string",
   "projects":["project1","project2"],
   "skills":["skill1","skill2"]
-}`
+}
+
+Do not add markdown.
+Do not explain anything.
+`
       },
       {
         role: "user",
