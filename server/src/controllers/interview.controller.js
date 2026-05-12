@@ -1,6 +1,7 @@
 import fs from "fs";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 import { askAi } from "../services/openRouter.js";
+import User from "../models/user.model.js";
 
 export const analyzeResume = async (req, res) => {
   let filepath;
@@ -90,3 +91,42 @@ Do not explain anything.
     return res.status(500).json({ message: error.message });
   }
 };
+
+
+export const generateQuestion=async(req,res)=>{
+  try {
+    const {role,experience,mode,resumeText,projects,skills}=req.body
+    role=role?.trim();
+    experience=experience?.trim();
+    mode=mode?.trim();
+    if(!role || !experience||!mode){
+      return res.ststus(400).json({message:"role,experince and mode are required"});
+
+    }
+
+    const user=await User.findById(req.userId)
+
+
+    if(!user){
+      return res.ststus(400).json({message:"user not found"});
+
+    }
+
+    if(user.credits<50){
+      return res.ststus(400).json({message:"Insufficient credits"});
+
+    }
+
+    const projectText=Array.isArray(projects)&& projects.length? projects.join(", ")
+    :"None";
+    const skillsText=Array.isArray(skills)&& skills.length? skills.join(", ")
+    :"None";
+
+    const safeResume=resumeText?.trim()||"None";
+
+
+
+  } catch (error) {
+    
+  }
+}
