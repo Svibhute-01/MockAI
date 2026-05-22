@@ -114,8 +114,8 @@ VITE_FIREBASE_APIKEY=your_firebase_api_key
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/mockai.git
-cd mockai
+git clone https://github.com/Svibhute-01/MockAI.git
+cd MockAI
 ```
 
 ### 2. Install Dependencies
