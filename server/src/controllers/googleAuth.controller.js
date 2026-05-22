@@ -19,11 +19,13 @@ export const googleAuth = async (req, res) => {
 
     const token = await generateJWTtoken(user);
 
-    // ✅ Set cookie properly
+    const isProduction = process.env.NODE_ENV === "production";
+    const isHttps = req.headers["x-forwarded-proto"] === "https" || isProduction;
+
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,        // ❗ set true in production (HTTPS)
-      sameSite: "lax",      // ✅ important for localhost
+      secure: isHttps,
+      sameSite: isHttps ? "none" : "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -41,10 +43,13 @@ export const googleAuth = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
+    const isProduction = process.env.NODE_ENV === "production";
+    const isHttps = req.headers["x-forwarded-proto"] === "https" || isProduction;
+
     res.clearCookie("token", {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: isHttps,
+      sameSite: isHttps ? "none" : "lax",
     });
 
     return res.status(200).json({
