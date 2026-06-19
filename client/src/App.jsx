@@ -7,6 +7,7 @@ import API from "./api/api";
 import { useDispatch } from "react-redux";
 import { setUserData } from "./redux/userSlice";
 import Interview from "./pages/Interview";
+import Pricing from "./pages/Pricing.jsx";
 
 export const serverUrl = "http://localhost:3001";
 
@@ -36,6 +37,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/interview" element={<Interview/>} />
+      <Route path="/pricing" element={<Pricing/>} />
 
     </Routes>
   );
