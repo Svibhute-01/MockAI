@@ -323,3 +323,16 @@ export const getInterview = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+// ─── Get All Interviews for User ───────────────────────────────────────────────
+export const getUserInterviews = async (req, res) => {
+  try {
+    const interviews = await Interview.find({ userId: req.user.id })
+      .sort({ createdAt: -1 })
+      .select("role experience mode finalScore status createdAt questions skills");
+    return res.json({ interviews });
+  } catch (error) {
+    console.error("Get User Interviews Error:", error.message);
+    return res.status(500).json({ message: error.message });
+  }
+};
